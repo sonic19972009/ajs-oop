@@ -17,4 +17,21 @@ export default class Character {
     this.attack = 0;
     this.defence = 0;
   }
+
+  levelUp() {
+    if (this.health === 0) {
+      throw new Error('Cannot level up a dead character');
+    }
+    this.level += 1;
+    this.attack = +(this.attack * 1.2).toFixed(1); // повышаем на 20%
+    this.defence = +(this.defence * 1.2).toFixed(1);
+    this.health = 100;
+  }
+
+  damage(points) {
+    if (this.health === 0) return; // ничего не делаем, если персонаж уже мёртв
+    const actualDamage = points * (1 - this.defence / 100);
+    this.health -= actualDamage;
+    if (this.health < 0) this.health = 0;
+  }
 }
